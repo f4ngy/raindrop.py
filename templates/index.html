@@ -11,7 +11,9 @@
     </head>
 
     <body>
-    
+
+        <audio src="" id="player"></audio>
+
         <script src="/static/js/vendor/jquery.js"></script>
         <script src="/static/js/foundation.min.js"></script>
         <script src="/static/js/jquery.simpleWeather.min.js"></script>
@@ -26,7 +28,8 @@
                     woeid: '',
                     unit: 'f',
                     success: function(weather) {
-                        console.log(weather.currently);
+                        document.getElementById('player').src = '/stream/' + weather.currently;
+                        document.getElementById('player').play();
                     },
                     error: function(error) {
                         console.log(error);
