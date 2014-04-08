@@ -12,14 +12,55 @@
 
     <body>
 
+        {% set conditions = ['Rain', 'Light Rain', 'Thunderstorm', 'Windy'] %}
+
         <audio src="" id="player"></audio>
+        <div class="previewsContainer" style="display:none"></div>
+
+        <div style="height:5%"></div>
+
+        <div class="row">
+
+            <div class="large-12 columns">
+
+                <ul class="large-block-grid-3">
+
+                    {% for condition in conditions %}
+
+                    <li>
+                        <div style="border: 1px solid #000; padding-top:1em;
+                            padding-bottom:1em;" id="upload-{{condition|replace(" ", "-")}}">
+                            <center><h4>{{ condition }}</h3></center>
+                        </div>
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
 
         <script src="/static/js/vendor/jquery.js"></script>
         <script src="/static/js/foundation.min.js"></script>
         <script src="/static/js/jquery.simpleWeather.min.js"></script>
+        <script src="/static/js/dropzone.js"></script>
         <script>
 
             $(document).foundation();
+
+            {% for condition in conditions %}
+            $("#upload-{{condition|replace(' ', '-')}}").dropzone({
+                url: "/stream/{{condition}}",
+                paramName: "clip",
+                clickable: true,
+                previewsContainer: ".previewsContainer",
+                success: function(file, response) {
+                    $("#upload-{{condition|replace(' ', '-')}}").fadeOut(500).fadeIn(500);
+                }
+            });
+            {% endfor %}
 
             window.setInterval(function () {
 
