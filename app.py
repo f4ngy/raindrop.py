@@ -2,11 +2,12 @@ from flask import Flask, render_template, send_from_directory, request
 import os
 
 raindrop = Flask(__name__)
+location = "Rochester, NY"
 
 @raindrop.route('/')
 def home():
 
-    return render_template('index.html')
+    return render_template('index.html', location=location)
 
 
 @raindrop.route('/stream/<condition>', methods=['GET', 'POST'])

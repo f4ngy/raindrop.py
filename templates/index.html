@@ -65,7 +65,7 @@
             window.setInterval(function () {
 
                 $.simpleWeather({
-                    location: 'Rochester, NY',
+                    location: '{{ location }}',
                     woeid: '',
                     unit: 'f',
                     success: function(weather) {
