@@ -1,8 +1,15 @@
 from flask import Flask, render_template, send_from_directory, request
 import os
+import socket
+import urllib
 
 raindrop = Flask(__name__)
-location = "Rochester, NY"
+
+ip = socket.gethostbyname(socket.gethostname())
+response = urllib.urlopen("http://api.hostip.info/get_html.php?ip={}&position=true".format(ip)).read()
+lines = response.splitlines()
+location = (lines[1])[6:]
+print(location)
 
 @raindrop.route('/')
 def home():
