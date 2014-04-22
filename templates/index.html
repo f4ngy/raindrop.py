@@ -78,8 +78,17 @@
                     woeid: '',
                     unit: 'f',
                     success: function(weather) {
-                        document.getElementById('player').src = '/stream/' + weather.currently;
-                        document.getElementById('player').play();
+                        $.ajax({
+                            type: 'HEAD',
+                            url: '/stream/' + weather.currently,
+                            success: function() {
+                                document.getElementById('player').src = '/stream/' + weather.currently;
+                                document.getElementById('player').play();
+                            },
+                            error: function() {
+                                alert("No stream for '" + weather.currently + "'!");
+                            }
+                        });
                         document.getElementById('info').innerHTML = "Currently " + weather.currently + " in {{ location }}";
                     },
                     error: function(error) {
