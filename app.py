@@ -1,5 +1,6 @@
 from flask import Flask, render_template, send_from_directory, request
 import os
+import glob
 import requests
 raindrop = Flask(__name__)
 
@@ -9,7 +10,9 @@ geo = requests.get('http://freegeoip.net/json/'+ip).json()
 @raindrop.route('/')
 def home():
 
-    return render_template('index.html', location=geo['city']+', '+geo['region_code'])
+    conditions = [condition.replace('sounds/','').replace('.mp3', '') for condition in glob.glob('sounds/*.mp3')]
+
+    return render_template('index.html', location=geo['city']+', '+geo['region_code'], conditions=conditions)
 
 
 @raindrop.route('/stream/<condition>', methods=['GET', 'POST'])
