@@ -75,6 +75,8 @@
                 }
             });
             {% endfor %}
+            
+            var previous_weather;
 
             window.setInterval(function () {
 
@@ -82,15 +84,23 @@
                     location: '{{ location }}',
                     woeid: '',
                     unit: 'f',
-                    success: function(weather) {
+                    success: function(weather) 
+                    {
                         $.ajax({
                             url: '/stream/' + weather.currently,
-                            success: function() {
-                                document.getElementById('player').src = '/stream/' + weather.currently;
-                                document.getElementById('player').play();
+                            success: function() 
+                            {
+                                if(weather.currently != previous_weather)
+                    			{
+                        			document.getElementById('player').src = '/stream/' + weather.currently;
+                        			document.getElementById('player').play();
+                        			previous_weather = weather.currently;
+                        		}
                             },
-                            error: function() {
-                                if (window.conditions.indexOf(weather.currently) < 0){
+                            error: function() 
+                            {
+                                if (window.conditions.indexOf(weather.currently) < 0)
+                                {
                                     var boxes = document.getElementById("boxes");
                                     var box = document.createElement("li");
                                     box.innerHTML = "<div style='border:1px solid #000; padding-top:1em;padding-bottom: 1em;' id='upload-" + weather.currently.replace(/\s+/g, '-') + "'><center><h4>" + weather.currently + "</h3></center></div>"
