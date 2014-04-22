@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="/static/css/foundation.min.css" />
         <link rel="stylesheet" href="/static/css/jquery.growl.css" />
         <script src="/static/js/vendor/modernizr.js"></script>
+        <script type="text/javascript">
+            window.conditions = [];
+        </script>
     </head>
 
     <body>
@@ -32,7 +35,7 @@
 
             <div class="large-12 columns">
 
-                <ul class="large-block-grid-3">
+                <ul class="large-block-grid-3" id="boxes">
 
                     {% for condition in conditions %}
 
@@ -42,6 +45,10 @@
                             <center><h4>{{ condition }}</h3></center>
                         </div>
                     </li>
+
+                    <script type="text/javascript">
+                        window.conditions.push("{{ condition }}");
+                    </script>
 
                     {% endfor %}
 
@@ -79,14 +86,28 @@
                     unit: 'f',
                     success: function(weather) {
                         $.ajax({
-                            type: 'HEAD',
                             url: '/stream/' + weather.currently,
                             success: function() {
                                 document.getElementById('player').src = '/stream/' + weather.currently;
                                 document.getElementById('player').play();
                             },
                             error: function() {
-                                alert("No stream for '" + weather.currently + "'!");
+                                if (window.conditions.indexOf(weather.currently) < 0){
+                                    var boxes = document.getElementById("boxes");
+                                    var box = document.createElement("li");
+                                    box.innerHTML = "<div style='border:1px solid #000; padding-top:1em;padding-bottom: 1em;' id='upload-" + weather.currently.replace(/\s+/g, '-') + "'><center><h4>" + weather.currently + "</h3></center></div>"
+                                    boxes.appendChild(box);
+                                    $("#upload-"+weather.currently.replace(/\s+/g, '-')).dropzone({
+                                        url: "/stream/" + weather.currently,
+                                        paramName: "clip",
+                                        clickable: true,
+                                        previewsContainer: ".previewsContainer",
+                                        success: function(file, response) {
+                                            $("#upload-" + weather.currently.replace(/\s+/g, '-')).fadeOut(500).fadeIn(500);
+                                        }
+                                    });
+                                    window.conditions.push(weather.currently);
+                                }
                             }
                         });
                         document.getElementById('info').innerHTML = "Currently " + weather.currently + " in {{ location }}";
