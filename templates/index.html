@@ -94,6 +94,7 @@
                     			{
                         			document.getElementById('player').src = '/stream/' + weather.currently;
                         			document.getElementById('player').play();
+                        			document.getElementById('player').loop = true;
                         			previous_weather = weather.currently;
                         		}
                             },
