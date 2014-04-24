@@ -1,7 +1,7 @@
 raindrop.py
 ===========
 
-A python/flask application that will play ambient music based on your current weather.
+A python/flask application that will play ambient music based on your current weather. Music files need to be in .mp3 format.
 
 Default tracks used under Creative Commons, created by Matti Paalanen (http://www.mattipaalanen.com/projects.html)
 
