@@ -1,0 +1,2 @@
+recursive-include raindrop/templates *
+recursive-include raindrop/static *
