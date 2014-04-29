@@ -6,6 +6,7 @@ setup(
 	packages = ['raindrop'],
 	include_package_data = True,
 	zip_safe = False,
+	scripts = [ "raindrop/bin/raindrop" ],
 	install_requires = [
 		'flask',
 		'requests'
