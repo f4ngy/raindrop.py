@@ -9,7 +9,7 @@ raindrop.py can be pip installed, the pypi page for it is located at https://pyp
 
 Developer Instructions
 ===========
-Coming soon
+Clone this repo and run setup.py to get started!
 
 Adding/Changing Audio
 ===========
