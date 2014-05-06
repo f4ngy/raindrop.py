@@ -11,6 +11,10 @@ Developer Instructions
 ===========
 Clone this repo and run setup.py to get started!
 
+After entering the repo folder:
+
+"python setup.py install"
+
 Adding/Changing Audio
 ===========
 
