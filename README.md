@@ -3,17 +3,24 @@ raindrop.py
 
 A python/flask application that will play ambient music based on your current weather. Music files need to be in .mp3 format.
 
-User Instructions
+Installing
 ===========
-raindrop.py can be pip installed, the pypi page for it is located at https://pypi.python.org/pypi/raindrop.py/0.1
 
-Developer Instructions
+Either run
+
+    $ pip install raindrop.py
+  
+or 
+
+    $ git clone https://github.com/lle6138/raindrop.py.git
+    $ cd raindrop.py
+    $ python setup.py install
+    
+
+Contributing
 ===========
-Clone this repo and run setup.py to get started!
 
-After entering the repo folder:
-
-"python setup.py install"
+Clone the repo and submit a pull request.
 
 Adding/Changing Audio
 ===========
