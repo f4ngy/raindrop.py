@@ -12,5 +12,6 @@ setup(
 	install_requires = [
 		'flask',
 		'requests'
-	]
+	],
+	license = "AGPL3"
 )
