@@ -77,8 +77,11 @@
             {% endfor %}
             
             var previous_weather;
+            var interval;
+            var maxFail = 25;
+            var currentFail = 0;
 
-            window.setInterval(function () {
+            interval = window.setInterval(function () {
 
                 $.simpleWeather({
                     location: '{{ location }}',
@@ -96,12 +99,17 @@
                         			document.getElementById('player').play();
                         			document.getElementById('player').loop = true;
                         			previous_weather = weather.currently;
+                        			currentFail = 0;
                         		}
                             },
                             error: function() 
                             {
+                            	currentFail = currentFail + 1;
+                            	console.log("Failed");
+                            
                                 if (window.conditions.indexOf(weather.currently) < 0)
                                 {
+                                	currentFail = 0;
                                     var boxes = document.getElementById("boxes");
                                     var box = document.createElement("li");
                                     box.innerHTML = "<div style='border:1px solid #000; padding-top:1em;padding-bottom: 1em;' id='upload-" + weather.currently.replace(/\s+/g, '-') + "'><center><h4>" + weather.currently + "</h3></center></div>"
@@ -116,6 +124,11 @@
                                         }
                                     });
                                     window.conditions.push(weather.currently);
+                                }
+                                else if (currentFail >= maxFail)
+                                {
+                                	alert("No stream for '" + weather.currently + "'! Add an audio track to '" + weather.currently + "' and restart raindrop.py");
+                                	window.clearInterval(interval);
                                 }
                             }
                         });
